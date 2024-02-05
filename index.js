@@ -171,13 +171,10 @@ app.post("/bookings", async (req, res) => {
 
 //Get Bookings
 
-app.get("/bookings", verifyJWT, async (req, res) => {
+app.get("/bookings", async (req, res) => {
   try {
     const email = req.query.email;
-    const decodedEmail = req?.decoded?.email;
-    if (email !== decodedEmail) {
-      return res.status(403).send({ message: "Forbidden Access" });
-    }
+
     const bookings = await BookingsCollection.find({ email: email }).toArray();
 
     res.send({
